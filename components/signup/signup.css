@@ -1,0 +1,26 @@
+/* Basic.css */
+
+.section {
+  display: grid;
+  grid-template-columns: 1fr; /* mobile = 1 column */
+  height: 100vh;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    grid-template-columns: 1fr 1fr; /* desktop = 2 columns */
+  }
+}
+
+.left-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* makes sure image covers fully */
+}
+
+.right-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}

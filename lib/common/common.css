@@ -1,0 +1,21 @@
+.search-structure {
+  height: 7vh;
+}
+.search-structure > input {
+  padding-left: 12px;
+}
+.model-screen {
+  height: 22rem;
+}
+.buttons {
+  background: #1a2024;
+  border: 1px solid #1a2024;
+  padding: 12px;
+  border-radius: 10px !important;
+  color: #fff;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
