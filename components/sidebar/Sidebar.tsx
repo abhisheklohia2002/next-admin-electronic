@@ -12,188 +12,116 @@ import {
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
-  ShoppingBagIcon,
   PowerIcon,
-  ArchiveBoxIcon, // for Inventory
+  ArchiveBoxIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import { MdWifiCalling } from "react-icons/md";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+
+// 👉 Menu Config
+const menuItems = [
+  { label: "Dashboard", icon: <PresentationChartBarIcon className="h-5 w-5" />, path: "/dashbaord" },
+  { label: "MP Profile", icon: null, path: "/profile" },
+  { label: "MP Sales", icon: <RiMoneyDollarCircleFill className="h-5 w-5" />, path: "/sales" },
+  { label: "MP Roles", icon: null, path: "/roles" },
+];
+
+const accordionItems = [
+  {
+    label: "E-Commerce",
+    children: [
+      { label: "Orders", path: "/orders" },
+      { label: "Products", path: "/products" },
+    ],
+  },
+  {
+    label: "Inventory",
+    icon: <ArchiveBoxIcon className="h-5 w-5" />,
+    children: [
+      { label: "Stock List", path: "/inventory/stock" },
+      { label: "Low Stock Alerts", path: "/inventory/alerts" },
+      { label: "Serial Numbers", path: "/inventory/serials" },
+    ],
+  },
+];
+
 export function CustomSidebar() {
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState<number | null>(null);
   const router = useRouter();
-  const handleOpen = (value: number) => {
-    setOpen(open === value ? 0 : value);
+
+  const handleOpen = (index: number) => {
+    setOpen(open === index ? null : index);
   };
-  const handleRedirect = (links: any) => {
-    console.log(links,'acac')
-    if (links === "/dashbaord") {
-      redirect(`/`);
-    } else if (links === "/sales") {
-      router.push(`/sales`);
-    }
+
+  const handleRedirect = (path: string) => {
+    router.push(path);
   };
 
   return (
     <Card className="h-screen w-full max-w-[15rem] flex flex-col justify-between p-4 shadow-xl shadow-blue-gray-900/5">
-      {/* 🔹 Logo Section */}
+      {/* Logo */}
       <div className="mb-4 flex items-center space-x-3 p-4">
-        <Image
-          src={"/images/a-icons.png"}
-          width={40}
-          height={40}
-          alt="logo"
-          className="rounded-full"
-        />
+        <Image src={"/images/a-icons.png"} width={40} height={40} alt="logo" className="rounded-full" />
         <Typography variant="h6" color="blue-gray">
           Electronics
         </Typography>
       </div>
 
-      {/* 🔹 Menu */}
+      {/* Menu */}
       <div className="flex-1 overflow-y-auto">
         <List>
-          {/* Dashboard */}
-          <ListItem>
-            <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            <Typography
-              onClick={() => handleRedirect("/dashbaord")}
-              color="blue-gray"
-              className="font-normal"
-            >
-              Dashboard
-            </Typography>
-          </ListItem>
-
-          {/* E-Commerce Accordion */}
-          <Accordion
-            open={open === 1}
-            icon={
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`mx-auto h-4 w-4 transition-transform ${
-                  open === 1 ? "rotate-180" : ""
-                }`}
-              />
-            }
-          >
-            <AccordionHeader
-              onClick={() => handleOpen(1)}
-              className="border-b-0 p-3"
-            >
-              <ListItemPrefix>
-                <ShoppingBagIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-normal">
-                E-Commerce
+          {/* Map simple items */}
+          {menuItems.map((item, i) => (
+            <ListItem key={i} onClick={() => handleRedirect(item.path)}>
+              {item.icon && <ListItemPrefix>{item.icon}</ListItemPrefix>}
+              <Typography color="blue-gray" className="font-normal">
+                {item.label}
               </Typography>
-            </AccordionHeader>
-            <AccordionBody className="py-1 overflow-hidden">
-              <List className="p-0">
-                <ListItem className="pl-6">
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="font-normal">
-                    Orders
-                  </Typography>
-                </ListItem>
-                <ListItem className="pl-6">
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="font-normal">
-                    Products
-                  </Typography>
-                </ListItem>
-              </List>
-            </AccordionBody>
-          </Accordion>
+            </ListItem>
+          ))}
 
-          {/* Sales */}
-          <ListItem>
-            <ListItemPrefix>
-              <RiMoneyDollarCircleFill className="h-5 w-5" />
-            </ListItemPrefix>
-            <Typography
-              onClick={() => handleRedirect("/sales")}
-              color="blue-gray"
-              className="font-normal"
+          {/* Map accordion items */}
+          {accordionItems.map((acc, index) => (
+            <Accordion
+              key={index}
+              open={open === index}
+              icon={
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    open === index ? "rotate-180" : ""
+                  }`}
+                />
+              }
             >
-              MP Sales
-            </Typography>
-          </ListItem>
-
-          {/* Support */}
-          <ListItem>
-            <ListItemPrefix>
-              <MdWifiCalling className="h-5 w-5" />
-            </ListItemPrefix>
-            <Typography color="blue-gray" className="font-normal">
-              Support
-            </Typography>
-          </ListItem>
-
-          {/* Inventory Accordion */}
-          <Accordion
-            open={open === 2}
-            icon={
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`mx-auto h-4 w-4 transition-transform ${
-                  open === 2 ? "rotate-180" : ""
-                }`}
-              />
-            }
-          >
-            <AccordionHeader
-              onClick={() => handleOpen(2)}
-              className="border-b-0 p-3"
-            >
-              <ListItemPrefix>
-                <ArchiveBoxIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-normal">
-                Inventory
-              </Typography>
-            </AccordionHeader>
-            <AccordionBody className="py-1 overflow-hidden">
-              <List className="p-0">
-                <ListItem className="pl-6">
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="font-normal">
-                    Stock List
-                  </Typography>
-                </ListItem>
-                <ListItem className="pl-6">
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="font-normal">
-                    Low Stock Alerts
-                  </Typography>
-                </ListItem>
-                <ListItem className="pl-6">
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="font-normal">
-                    Serial Numbers
-                  </Typography>
-                </ListItem>
-              </List>
-            </AccordionBody>
-          </Accordion>
+              <AccordionHeader onClick={() => handleOpen(index)} className="border-b-0 p-3">
+                {acc.icon && <ListItemPrefix>{acc.icon}</ListItemPrefix>}
+                <Typography color="blue-gray" className="mr-auto font-normal">
+                  {acc.label}
+                </Typography>
+              </AccordionHeader>
+              <AccordionBody className="py-1 overflow-hidden">
+                <List className="p-0">
+                  {acc.children.map((child, ci) => (
+                    <ListItem key={ci} className="pl-6" onClick={() => handleRedirect(child.path)}>
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      <Typography color="blue-gray" className="font-normal">
+                        {child.label}
+                      </Typography>
+                    </ListItem>
+                  ))}
+                </List>
+              </AccordionBody>
+            </Accordion>
+          ))}
         </List>
       </div>
 
-      {/* 🔹 Logout */}
+      {/* Logout */}
       <div className="border-t pt-4">
         <List>
           <ListItem>

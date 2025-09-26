@@ -16,9 +16,9 @@ export default function SideBarStructure({children,title}:any) {
         {/* Page content */}
         <main className="flex-1 p-6 bg-gray-50 overflow-y-auto">
           <h1 className="text-2xl font-semibold">Welcome to {title}</h1>
-          <p className="mt-4 text-gray-600">
+          <div className="mt-4 text-gray-600">
             {children}
-          </p>
+          </div>
         </main>
       </div>
       

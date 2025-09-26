@@ -1,13 +1,15 @@
 import PrivateRoute from "@/components/privateRoutes/PrivateRoutes";
 import SideBarStructure from "@/shared/sidebar/Sidebar";
 import React from "react";
-import SalesContent from "@/pages/sales/Sales";
-export default function Sales() {
+import ProfilePage from "@/pages/profile/page";
+
+export default function page({ params }: any) {
+  const { id } = params;
   return (
     <>
       <PrivateRoute>
-        <SideBarStructure title="Leads">
-          <SalesContent/>
+        <SideBarStructure title={`Profile by ${id}`}>
+          <ProfilePage id={id} />
         </SideBarStructure>
       </PrivateRoute>
     </>

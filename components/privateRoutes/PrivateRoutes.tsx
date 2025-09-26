@@ -27,9 +27,8 @@ export default function PrivateRoute({
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res, "----------->");
       if (res?.user?._id) {
-        router.push("/sales");
+        router.push("/dashboard");
       }
 
       setLoading(false);
