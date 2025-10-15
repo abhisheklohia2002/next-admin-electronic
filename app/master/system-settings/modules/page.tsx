@@ -1,13 +1,14 @@
 import PrivateRoute from "@/components/privateRoutes/PrivateRoutes";
+import ModulesPage from "@/pages/modules/modules";
 import SideBarStructure from "@/shared/sidebar/Sidebar";
 import React from "react";
-import SalesContent from "@/pages/sales/Sales";
-export default function Sales() {
+
+export default function page() {
   return (
     <>
       <PrivateRoute>
-        <SideBarStructure title="Leads">
-          <SalesContent/>
+        <SideBarStructure title="Manages Modules">
+          <ModulesPage/>
         </SideBarStructure>
       </PrivateRoute>
     </>
