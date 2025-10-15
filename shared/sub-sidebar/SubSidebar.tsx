@@ -15,29 +15,29 @@ import {
 } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
-export function CustomSubSidebar() {
+export function CustomSubSidebar({id}:any) {
   const router = useRouter();
 
   const menuItems = [
     {
       label: "Overview",
       icon: <ChartPieIcon className="h-5 w-5" />,
-      path: "/profile/overview",
+      path: `/profile/edit/${id}/overview`,
     },
     {
       label: "Basic Information",
       icon: <IdentificationIcon className="h-5 w-5" />,
-      path: "/profile/basic-info",
+      path: `/profile/edit/${id}/basic-info`,
     },
     {
       label: "Job Information",
       icon: <BriefcaseIcon className="h-5 w-5" />,
-      path: "/profile/job-info",
+      path: `/profile/edit/${id}/job-info`,
     },
     {
       label: "Module & SubModule",
       icon: <PuzzlePieceIcon className="h-5 w-5" />,
-      path: "/profile/modules",
+      path: `/profile/edit/${id}/modules`,
     },
   ];
 

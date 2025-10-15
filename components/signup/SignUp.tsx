@@ -15,7 +15,7 @@ function SignUp() {
     password: "",
   });
   const [toggleUser, setToggleUser] = useState<boolean>(true);
-const router = useRouter()
+  const router = useRouter();
   const handleUserInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setUserInfo((prev) => ({ ...prev, [name]: value }));
@@ -43,13 +43,23 @@ const router = useRouter()
 
         response = await axios.post(
           "http://localhost:8000/api/admin/signup",
-          payload
+          payload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
       } else {
         // Login
         response = await axios.post(
           "http://localhost:8000/api/admin/login",
-          payload
+          payload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);

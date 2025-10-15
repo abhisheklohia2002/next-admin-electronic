@@ -4,7 +4,7 @@ import CustomTable from "@/shared/custom-table/CustomTable";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-export default function ProfilePage({ id }: any) {
+export default function ProfilePage({ children, id }: any) {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<any[]>([]);
   const getProfile = async () => {
@@ -31,7 +31,7 @@ export default function ProfilePage({ id }: any) {
   return (
     <div>
       {id ? (
-        <ProfileAddEdit id = {id} />
+        <ProfileAddEdit id={id}>{children}</ProfileAddEdit>
       ) : (
         <CustomTable
           data={profile}

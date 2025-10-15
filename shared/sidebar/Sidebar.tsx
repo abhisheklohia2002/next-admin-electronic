@@ -2,7 +2,7 @@ import { StickyNavbar } from "@/components/navbar/navbar";
 import { CustomSidebar } from "@/components/sidebar/Sidebar";
 import React from "react";
 
-export default function SideBarStructure({children,title}:any) {
+export default function SideBarStructure({children,title,id}:any) {
   return (
     <div className="flex h-screen">
       <div className="w-60">

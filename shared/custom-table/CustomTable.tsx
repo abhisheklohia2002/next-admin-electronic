@@ -19,7 +19,7 @@ export default function CustomTable({
   const handleRedirect = (id: any) => {
     switch (module) {
       case "roles":
-        return router.push(`/roles/edit/${id}`);
+        return router.push(`/master/system-settings/roles/edit/${id}`);
       case "profiles":
         return router.push(`/profile/edit/${id}`);
     }
